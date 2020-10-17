@@ -222,12 +222,12 @@ def save_model_predictions(p, val_loader, model):
                     imageio.imwrite(os.path.join(save_dirs[task], fname + '.png'), result.astype(np.uint8))
 
 
-def eval_all_results(p):
+def eval_all_results(p, eval_edge=False):
     """ Evaluate results for every task by reading the predictions from the save dir """
     save_dir = p['save_dir'] 
     results = {}
  
-    if 'edge' in p.TASKS.NAMES: 
+    if 'edge' in p.TASKS.NAMES and eval_edge: 
         from evaluation.eval_edge import eval_edge_predictions
         results['edge'] = eval_edge_predictions(p, database=p['val_db_name'],
                              save_dir=save_dir)
@@ -260,6 +260,9 @@ def eval_all_results(p):
     if p['setup'] == 'multi_task': # Perform the multi-task performance evaluation
         single_task_test_dict = {}
         for task, test_dict in p.TASKS.SINGLE_TASK_TEST_DICT.items():
+            print(task, test_dict)
+            if task == "edge":
+                continue
             with open(test_dict, 'r') as f_:
                  single_task_test_dict[task] = json.load(f_)
         results['multi_task_performance'] = calculate_multi_task_performance(results, single_task_test_dict)            
