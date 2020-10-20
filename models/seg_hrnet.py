@@ -525,3 +525,25 @@ def hrnet_w18(pretrained=False):
             raise AssertionError('Error: No pretrained weights found for HRNet18. \n Download weights from https://github.com/HRNet/HRNet-Image-Classification and save them to {}'.format(pretrained_weights))
 
     return model
+
+
+def hrnet_w48(pretrained=False):
+    import yaml
+    from utils.mypath import PROJECT_ROOT_DIR
+    hrnet_cfg = os.path.join(PROJECT_ROOT_DIR, 'models', 'model_info', 'hrnet_w48.yml')
+
+    with open(hrnet_cfg, 'r') as stream:
+        hrnet_cfg = yaml.safe_load(stream)
+
+    model = HighResolutionNet(hrnet_cfg)
+    if pretrained:
+        pretrained_weights = os.path.join(PROJECT_ROOT_DIR, 'models', 'pretrained_models',
+                                          'hrnetv2_w48_imagenet_pretrained.pth')
+        if os.path.exists(pretrained_weights):
+            model.init_weights(pretrained_weights)
+        else:
+            raise AssertionError(
+                'Error: No pretrained weights found for HRNet18. \n Download weights from https://github.com/HRNet/HRNet-Image-Classification and save them to {}'.format(
+                    pretrained_weights))
+
+    return model
