@@ -34,6 +34,11 @@ def get_backbone(p):
         backbone = hrnet_w18(p['backbone_kwargs']['pretrained'])
         backbone_channels = [18, 36, 72, 144]
 
+    elif p['backbone'] == 'hrnet_w48':
+        from models.seg_hrnet import hrnet_w48
+        backbone = hrnet_w48(p['backbone_kwargs']['pretrained'])
+        backbone_channels = [48, 96, 192, 384]
+
     else:
         raise NotImplementedError
 
