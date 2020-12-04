@@ -4,7 +4,7 @@ setup: multi_task
 # Database
 train_db_name: NYUD
 val_db_name: NYUD 
-trBatch: 8
+trBatch: 4
 valBatch: 8
 nworkers: 4
 
@@ -41,4 +41,4 @@ loss_kwargs:
        depth: 1.0
 
 # Eval only final 10 epochs for speed-up
-eval_final_10_epochs_only: True
+eval_final_10_epochs_only: False
